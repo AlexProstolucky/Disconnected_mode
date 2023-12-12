@@ -21,6 +21,7 @@ namespace Disconnected_mode.Repository
             newRow["CostPrice"] = costPrice;
             newRow["SupplyDate"] = supplyDate;
             DB.storage.Rows.Add(newRow);
+            DB.SaveData();
         }
 
         public void AddProduct(int id, string typeName)
@@ -29,6 +30,7 @@ namespace Disconnected_mode.Repository
             newRow["ID"] = id;
             newRow["TypeName"] = typeName;
             DB.product.Rows.Add(newRow);
+            DB.SaveData();
         }
 
         public void AddProvider(int id, string providerName, string contactInfo)
@@ -38,6 +40,7 @@ namespace Disconnected_mode.Repository
             newRow["ProviderName"] = providerName;
             newRow["ContactInfo"] = contactInfo;
             DB.providers.Rows.Add(newRow);
+            DB.SaveData();
         }
 
         public void RemoveItem(int id)
@@ -46,6 +49,7 @@ namespace Disconnected_mode.Repository
             foreach (DataRow row in rows)
             {
                 DB.storage.Rows.Remove(row);
+                DB.SaveData();
             }
         }
 
@@ -55,6 +59,7 @@ namespace Disconnected_mode.Repository
             foreach (DataRow row in rows)
             {
                 DB.product.Rows.Remove(row);
+                DB.SaveData();
             }
         }
 
@@ -64,6 +69,7 @@ namespace Disconnected_mode.Repository
             foreach (DataRow row in rows)
             {
                 DB.providers.Rows.Remove(row);
+                DB.SaveData();
             }
         }
 
@@ -93,6 +99,7 @@ namespace Disconnected_mode.Repository
                 if (supplyDate.HasValue)
                     row["SupplyDate"] = supplyDate.Value;
             }
+            DB.SaveData();
         }
 
         public void UpdateProvider(int id, string providerName = null, string contactInfo = null)
@@ -109,6 +116,7 @@ namespace Disconnected_mode.Repository
                 if (contactInfo != null)
                     row["ContactInfo"] = contactInfo;
             }
+            DB.SaveData();
         }
 
         public void UpdateProduct(int id, string typeName = null)
@@ -122,19 +130,20 @@ namespace Disconnected_mode.Repository
                 if (typeName != null)
                     row["TypeName"] = typeName;
             }
+            DB.SaveData();
         }
 
 
         public void ShowProviderWithMaxQuantity()
         {
-            var maxQuantity = DB.storage.AsEnumerable().Max(row => row.Field<int>("Quantity"));
+            var maxQuantity = DB.storage.AsEnumerable().Max(row => row.Field<System.Int64>("Quantity"));
             DataRow[] rows = DB.storage.Select($"Quantity = {maxQuantity}");
             DisplayProviderInfo(rows, "Provider with the maximum quantity:");
         }
 
         public void ShowProviderWithMinQuantity()
         {
-            var minQuantity = DB.storage.AsEnumerable().Min(row => row.Field<int>("Quantity"));
+            var minQuantity = DB.storage.AsEnumerable().Min(row => row.Field<System.Int64>("Quantity"));
             DataRow[] rows = DB.storage.Select($"Quantity = {minQuantity}");
             DisplayProviderInfo(rows, "Provider with the minimum quantity:");
         }
@@ -157,13 +166,13 @@ namespace Disconnected_mode.Repository
 
         public void ShowProductTypeWithMaxQuantity()
         {
-            var maxQuantity = DB.storage.AsEnumerable().Max(row => row.Field<int>("Quantity"));
+            var maxQuantity = DB.storage.AsEnumerable().Max(row => row.Field<System.Int64>("Quantity"));
             DataRow[] rows = DB.storage.Select($"Quantity = {maxQuantity}");
             DisplayProductTypeInfo(rows, "Product type with the maximum quantity:");
         }
         public void ShowProductTypeWithMinQuantity()
         {
-            var minQuantity = DB.storage.AsEnumerable().Min(row => row.Field<int>("Quantity"));
+            var minQuantity = DB.storage.AsEnumerable().Min(row => row.Field<System.Int64>("Quantity"));
             DataRow[] rows = DB.storage.Select($"Quantity = {minQuantity}");
             DisplayProductTypeInfo(rows, "Product type with the minimum quantity:");
         }

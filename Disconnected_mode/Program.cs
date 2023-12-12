@@ -29,7 +29,7 @@ internal class Program
 
         dataWorking.InfoStorage();
         Console.WriteLine("\nRemove DATA");
-        dataWorking.RemoveItem(1);
+        dataWorking.RemoveItem(2);
 
         dataWorking.InfoStorage();
 
